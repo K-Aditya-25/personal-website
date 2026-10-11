@@ -18,26 +18,37 @@ export const posts = [
     title: "A Driving Lesson with a touch of AI",
     href: "https://akharbanda25.hashnode.dev/a-driving-lesson-with-a-touch-of-ai",
     note: "A personal story about the path to an Irish driving licence.",
+    coverImage: "https://cdn.hashnode.com/uploads/covers/64e0a34729a4a19a3f9e20e4/e49e4fa9-e57d-4ce1-966a-741a7162da88.png?w=800&h=420&auto=compress,format&format=webp",
+    coverAlt: "Cover image for A Driving Lesson with a touch of AI.",
   },
   {
     title: "The Guide To Better Prompting",
     href: "https://akharbanda25.hashnode.dev/the-guide-to-better-prompting",
     note: "Practical ways to make prompts clearer and more useful.",
+    coverImage: "https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/oLthDWAG244/upload/90193ab87bb89b28a39ab979f66abf70.jpeg?w=800&h=420&auto=compress,format&format=webp",
+    coverAlt: "Cover image for The Guide To Better Prompting.",
   },
   {
     title: "Mastering Convolutional Neural Networks",
     href: "https://akharbanda25.hashnode.dev/mastering-convolutional-neural-networks-a-comprehensive-guide-from-basics-to-vgg19",
     note: "A guide from the fundamentals through VGG19.",
+    coverImage: null,
+    coverAlt: "",
+    coverLabel: "CNN · VGG19",
   },
   {
     title: "Building a Formula 1 Car Classifier with 89% Accuracy",
     href: "https://akharbanda25.hashnode.dev/building-a-formula-1-car-classifier-with-89-accuracy",
     note: "A computer vision project focused on Formula 1 cars.",
+    coverImage: "https://cdn.hashnode.com/res/hashnode/image/upload/v1719172622683/1ce5edaa-f87b-4ff8-a1ea-27a61a6f60f1.jpeg?w=800&h=420&auto=compress,format&format=webp",
+    coverAlt: "Cover image for Building a Formula 1 Car Classifier with 89% Accuracy.",
   },
   {
     title: "Build an AI that Reads Your Handwriting",
     href: "https://akharbanda25.hashnode.dev/recreating-the-lenet-5-998-accuracy-on-mnist-step-by-step-guide",
     note: "A step-by-step LeNet-5 and MNIST project.",
+    coverImage: "https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/2EJCSULRwC8/upload/b9ccc232ac57f2bfeaf345d17599b717.jpeg?w=800&h=420&auto=compress,format&format=webp",
+    coverAlt: "Cover image for Build an AI that Reads Your Handwriting.",
   },
 ];
 
