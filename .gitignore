@@ -1,0 +1,5 @@
+dist/
+.original-images/
+.agents/
+skills-lock.json
+.DS_Store
