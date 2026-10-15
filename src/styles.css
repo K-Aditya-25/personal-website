@@ -36,6 +36,7 @@ button { font: inherit; }
 button:focus-visible, a:focus-visible { outline: 3px solid #6b8f2c; outline-offset: 5px; }
 img { display: block; max-width: 100%; }
 .site-main { overflow-x: hidden; width: 100%; max-width: 100%; }
+@supports (overflow-x: clip) { .site-main { overflow-x: clip; } }
 .page-width { width: min(var(--content), calc(100% - var(--page-gutter) * 2)); margin-inline: auto; }
 .section-space { padding-block: clamp(100px, 13vw, 190px); }
 .sr-only {
@@ -421,8 +422,27 @@ h1, h2, h3 { text-wrap: balance; }
 .blog-cover-credit { width: min(100%, 980px); margin: -56px auto 48px; color: #77847b; font-size: 11px; text-align: right; }
 .blog-cover-credit a { color: #496d36; text-decoration: underline; text-decoration-color: #a2b48c; text-underline-offset: 3px; }
 .blog-markdown { max-width: 760px; margin-inline: auto; color: #26372e; font-size: clamp(16px, 1.45vw, 18px); line-height: 1.86; overflow-wrap: anywhere; }
+.blog-reading-layout { display: grid; grid-template-columns: minmax(150px, 190px) minmax(0, 760px); align-items: start; justify-content: center; gap: clamp(28px, 5vw, 76px); }
+.blog-reading-layout-no-toc { display: block; }
+.blog-toc { position: sticky; top: 102px; align-self: start; z-index: 2; max-height: calc(100dvh - 124px); }
+.blog-toc-details { max-height: inherit; }
+.blog-toc-summary { display: flex; min-height: 34px; align-items: center; justify-content: space-between; gap: 15px; color: #65746a; font-size: 10px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; list-style: none; cursor: pointer; }
+.blog-toc-summary::-webkit-details-marker { display: none; }
+.blog-toc-summary::after { content: "−"; color: #879389; font-size: 15px; font-weight: 400; letter-spacing: 0; transition: color 180ms ease; }
+.blog-toc-details:not([open]) .blog-toc-summary::after { content: "+"; }
+.blog-toc-summary:hover::after, .blog-toc-summary:focus-visible::after { color: var(--ink); }
+.blog-toc-list { display: grid; max-height: calc(100dvh - 172px); gap: 8px; overflow-y: auto; margin: 10px 0 0; padding: 0 8px 0 0; list-style: none; scrollbar-width: thin; scrollbar-color: #c3cdc2 transparent; }
+.blog-toc-item { min-width: 0; }
+.blog-toc-level-2 { padding-left: 10px; }
+.blog-toc-level-3 { padding-left: 20px; }
+.blog-toc-link { display: block; color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: -.015em; line-height: 1.38; transition: color 180ms ease; }
+.blog-toc-level-2 .blog-toc-link { font-size: 11.5px; font-weight: 450; }
+.blog-toc-level-3 .blog-toc-link { font-size: 10px; font-weight: 400; }
+.blog-toc-link:hover, .blog-toc-link:focus-visible { color: var(--ink); }
+.blog-toc-summary:focus-visible { outline: 2px solid #6b8f2c; outline-offset: 4px; border-radius: 3px; }
 .blog-markdown > * + * { margin-top: 1.45em; }
 .blog-markdown h1, .blog-markdown h2, .blog-markdown h3, .blog-markdown h4, .blog-markdown h5, .blog-markdown h6 { margin-top: 2.25em; margin-bottom: .6em; color: var(--ink); font-weight: 550; letter-spacing: -.045em; line-height: 1.15; }
+.blog-markdown h2[id], .blog-markdown h3[id], .blog-markdown h4[id], .blog-markdown h5[id], .blog-markdown h6[id] { scroll-margin-top: 112px; }
 .blog-markdown h1, .blog-markdown h2 { font-size: 2.1em; }
 .blog-markdown h3 { font-size: 1.7em; }
 .blog-markdown h4 { font-size: 1.35em; }
@@ -593,6 +613,14 @@ h1, h2, h3 { text-wrap: balance; }
   .footer-bottom { grid-template-columns: .9fr 1.1fr .7fr; gap: 25px; }
   .writing-intro-panel { grid-template-columns: 1fr 1fr; }
   .writing-intro-panel .button { justify-self: start; grid-column: 2; }
+}
+
+@media (max-width: 1100px) {
+  .blog-reading-layout { grid-template-columns: minmax(0, 760px); gap: 24px; }
+  .blog-toc { top: 78px; max-height: none; margin-bottom: 0; background: var(--paper); }
+  .blog-toc-details { position: relative; border-bottom: 1px solid var(--line); }
+  .blog-toc-summary { min-height: 42px; }
+  .blog-toc-list { position: absolute; top: 100%; right: 0; left: 0; z-index: 3; max-height: min(55dvh, 440px); gap: 10px; margin: 0; padding: 14px 16px; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 9px 9px; background: var(--paper); }
 }
 
 @media (max-width: 850px) {

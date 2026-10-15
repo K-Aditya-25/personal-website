@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FiArrowLeft, FiArrowUpRight, FiClock } from "react-icons/fi";
+import BlogToc from "../../../components/blog-toc";
 import { formatPostDate, getPost, getPosts } from "../../../../content/posts.mjs";
 
 export const dynamicParams = false;
@@ -69,7 +70,10 @@ export default async function WritingPostPage({ params }) {
         </>
       ) : null}
 
-      <div className="blog-markdown" dangerouslySetInnerHTML={{ __html: post.html }} />
+      <div className={`blog-reading-layout${post.headings.length ? "" : " blog-reading-layout-no-toc"}`}>
+        <BlogToc headings={post.headings} />
+        <div className="blog-markdown" dangerouslySetInnerHTML={{ __html: post.html }} />
+      </div>
 
       <footer className="blog-post-footer">
         <Link className="button button-dark" href="/writing/">

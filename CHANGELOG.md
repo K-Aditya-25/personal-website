@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-16 — Collapsible article outline
+
+### Added
+
+- Added a sticky, collapsible table of contents to article pages, generated from Markdown headings with working anchor links.
+- Added responsive styling for a compact dropdown outline on narrower screens, with typography that reflects heading levels.
+
 ## 2026-10-16 — On-site Markdown blog
 
 ### Added

@@ -33,6 +33,11 @@ const markdownHtmlOptions = {
     ...sanitizeHtml.defaults.allowedAttributes,
     a: [...(sanitizeHtml.defaults.allowedAttributes.a ?? []), "name", "target", "rel"],
     div: ["data-node-type"],
+    h2: ["id"],
+    h3: ["id"],
+    h4: ["id"],
+    h5: ["id"],
+    h6: ["id"],
     img: ["src", "alt", "title", "width", "height"],
     code: ["class"],
     th: ["align"],
@@ -68,12 +73,47 @@ function postFiles() {
 function renderPostMarkdown(content) {
   const renderer = new marked.Renderer();
   const renderHeading = renderer.heading.bind(renderer);
+  const headings = [];
+  const usedHeadingIds = new Set();
+  let headingCount = 0;
+
+  function headingText(tokens) {
+    return tokens.map((token) => {
+      if (token.type === "br") return " ";
+      if (token.type === "html") return (token.text ?? "").replace(/<[^>]*>/g, " ");
+      if (token.type === "image") return token.text ?? "";
+      if (Array.isArray(token.tokens)) return headingText(token.tokens);
+      return typeof token.text === "string" ? token.text : "";
+    }).join("").replace(/\s+/g, " ").trim();
+  }
+
+  function headingId(text, index) {
+    const base = text
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || `section-${index + 1}`;
+    let id = base;
+    let suffix = 2;
+    while (usedHeadingIds.has(id)) id = `${base}-${suffix++}`;
+    usedHeadingIds.add(id);
+    return id;
+  }
 
   // The article title is already rendered as the page's single h1.
-  renderer.heading = ({ tokens, depth }) =>
-    renderHeading({ tokens, depth: Math.min(depth + 1, 6) });
+  renderer.heading = ({ tokens, depth }) => {
+    const text = headingText(tokens);
+    const id = headingId(text, headingCount++);
+    const outputDepth = Math.min(depth + 1, 6);
+    const html = renderHeading({ tokens, depth: outputDepth });
 
-  return marked.parse(content, { renderer });
+    if (depth <= 3 && text) headings.push({ id, text, level: depth });
+
+    return html.replace(`<h${outputDepth}>`, `<h${outputDepth} id="${id}">`);
+  };
+
+  return { html: marked.parse(content, { renderer }), headings };
 }
 
 function safeHttpUrl(value) {
@@ -113,6 +153,7 @@ function readPost(filename, renderMarkdown = false) {
   const tags = Array.isArray(data.tags)
     ? data.tags.filter((tag) => typeof tag === "string").map((tag) => tag.trim()).filter(Boolean)
     : [];
+  const renderedMarkdown = renderMarkdown ? renderPostMarkdown(content) : null;
 
   return {
     slug,
@@ -130,9 +171,10 @@ function readPost(filename, renderMarkdown = false) {
     coverAttribution: safeHttpUrl(data.coverAttribution),
     originalUrl: typeof data.originalUrl === "string" ? data.originalUrl.trim() : null,
     readTimeInMinutes,
-    ...(renderMarkdown
+    ...(renderedMarkdown
       ? {
-          html: sanitizeHtml(renderPostMarkdown(content), markdownHtmlOptions),
+          html: sanitizeHtml(renderedMarkdown.html, markdownHtmlOptions),
+          headings: renderedMarkdown.headings,
         }
       : {}),
   };
