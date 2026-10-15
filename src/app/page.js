@@ -1,15 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FiArrowDown, FiArrowUpRight } from "react-icons/fi";
+import { GiShuttlecock } from "react-icons/gi";
+import { TbWriting } from "react-icons/tb";
 import { getPosts } from "../../content/posts.mjs";
 import { profile, volunteering } from "../../content/site-data.mjs";
 import FeaturedWriting from "../components/featured-writing";
-import ScrubCopy from "../components/scrub-copy";
 
 const interestCards = [
   {
     href: "/writing/",
     className: "interest-card interest-card-work",
+    art: "writing",
     eyebrow: "On the blog",
     title: "Writing as I learn.",
     copy: "Short notes on AI, data and ideas worth exploring.",
@@ -17,6 +19,7 @@ const interestCards = [
   {
     href: "/competitions/",
     className: "interest-card interest-card-sport",
+    art: "badminton",
     eyebrow: "On court",
     title: "One more rally.",
     copy: "Men’s doubles in the Dublin District League, moving from Division 5 to Division 4 in 2 years.",
@@ -32,7 +35,7 @@ const interestCards = [
     href: "/volunteering/",
     className: "interest-card interest-card-community",
     eyebrow: "In the community",
-    title: "Show up, lend a hand, make it count.",
+    title: "Helping organise community events",
     copy: "Event content and photography at Give(a)Go, and time at Trinity College Dublin Open Day.",
   },
 ];
@@ -104,12 +107,11 @@ export default function HomePage() {
       </div>
 
       <section className="home-interests page-width section-space" id="interests" aria-labelledby="interest-title">
-        <div className="section-heading">
+        <div className="section-heading interest-heading">
           <div>
             <p className="eyebrow">A few things that make a week</p>
             <h2 id="interest-title">Welcome to my corner of the internet :)</h2>
           </div>
-          <ScrubCopy className="section-aside">A role in technology, a racket in hand, a book close by, and people who make Dublin feel like home.</ScrubCopy>
         </div>
         <div className="interest-grid grid-flow-dense">
           {interestCards.map((card) => (
@@ -120,7 +122,12 @@ export default function HomePage() {
                 <p>{card.copy}</p>
                 <span className="interest-link">Explore <FiArrowUpRight aria-hidden="true" /></span>
               </div>
-              <span className="interest-art" aria-hidden="true" />
+              <span className={`interest-art${card.art ? ` interest-art-${card.art}` : ""}`} aria-hidden="true">
+                {card.art === "writing" ? (
+                  <TbWriting />
+                ) : null}
+                {card.art === "badminton" ? <GiShuttlecock /> : null}
+              </span>
             </Link>
           ))}
         </div>
@@ -157,11 +164,6 @@ export default function HomePage() {
 
       <FeaturedWriting posts={posts} />
 
-      <section className="home-last-word page-width section-space">
-        <p className="eyebrow">The next chapter</p>
-        <ScrubCopy className="home-last-copy">The next chapter is becoming an AI engineer.</ScrubCopy>
-        <Link className="text-link" href="/competitions/">See where curiosity takes me <FiArrowUpRight aria-hidden="true" /></Link>
-      </section>
     </>
   );
 }

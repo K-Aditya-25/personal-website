@@ -252,7 +252,7 @@ h1, h2, h3 { text-wrap: balance; }
 .interest-link { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); font-size: 12px; font-weight: 650; }
 .interest-link svg { width: 14px; height: 14px; transition: transform 180ms ease; }
 .interest-card:hover .interest-link svg { transform: translate(3px, -3px); }
-.interest-art { position: absolute; z-index: 0; top: 28px; right: 32px; width: 155px; height: 155px; border: 1px solid rgb(27 52 39 / 15%); border-radius: 50%; opacity: .75; transition: transform 700ms cubic-bezier(.2,.7,.2,1), opacity 300ms ease; }
+.interest-art { position: absolute; z-index: 0; top: 28px; right: 32px; width: 155px; height: 155px; border: 1px solid rgb(27 52 39 / 45%); border-radius: 50%; opacity: .34; transition: transform 700ms cubic-bezier(.2,.7,.2,1), opacity 300ms ease; }
 .interest-card:hover .interest-art { transform: scale(1.12) rotate(12deg); opacity: 1; }
 .interest-card-work .interest-art, .interest-card-sport .interest-art { top: 22px; right: 12px; width: 100px; height: 100px; display: grid; place-items: center; border: 0; border-radius: 0; opacity: .34; }
 .interest-card-work .interest-art svg { width: 88px; height: 88px; color: #647e30; transform: rotate(-12deg); }
@@ -261,10 +261,10 @@ h1, h2, h3 { text-wrap: balance; }
 .interest-card-work .interest-card-copy, .interest-card-sport .interest-card-copy { width: calc(100% - 76px); }
 .interest-card-work .interest-card-copy > p:not(.interest-eyebrow) { max-width: 30ch; }
 .interest-card-sport .interest-card-copy > p:not(.interest-eyebrow) { max-width: 29ch; }
-.interest-card-books .interest-art { width: 105px; height: 145px; border-radius: 5px; transform: rotate(10deg); box-shadow: 10px 6px 0 -2px #f3f0e7, 10px 6px 0 -1px rgb(27 52 39 / 16%); }
-.interest-card-books .interest-art::before { position: absolute; top: 0; bottom: 0; left: 13px; width: 1px; content: ""; background: rgb(27 52 39 / 16%); }
-.interest-card-books .interest-art::after { position: absolute; top: 40px; right: 14px; left: 23px; height: 32px; content: ""; border-top: 1px solid rgb(27 52 39 / 20%); border-bottom: 1px solid rgb(27 52 39 / 20%); }
-.interest-card-community .interest-art { background: radial-gradient(circle at 50% 50%, transparent 0 21px, rgb(27 52 39 / 14%) 22px 23px, transparent 24px), radial-gradient(circle at 50% 50%, transparent 0 50px, rgb(27 52 39 / 14%) 51px 52px, transparent 53px); }
+.interest-card-books .interest-art { width: 105px; height: 145px; border-color: #718d5c; border-radius: 5px; transform: rotate(10deg); box-shadow: 10px 6px 0 -2px #f3f0e7, 10px 6px 0 -1px #718d5c; }
+.interest-card-books .interest-art::before { position: absolute; top: 0; bottom: 0; left: 13px; width: 1px; content: ""; background: #718d5c; }
+.interest-card-books .interest-art::after { position: absolute; top: 40px; right: 14px; left: 23px; height: 32px; content: ""; border-top: 1px solid #718d5c; border-bottom: 1px solid #718d5c; }
+.interest-card-community .interest-art { background: radial-gradient(circle at 50% 50%, transparent 0 21px, #718d5c 22px 23px, transparent 24px), radial-gradient(circle at 50% 50%, transparent 0 50px, #718d5c 51px 52px, transparent 53px); }
 .interest-card-community .interest-art::before, .interest-card-community .interest-art::after { position: absolute; top: 50%; left: 50%; width: 22px; height: 22px; content: ""; border-radius: 50%; background: #91a866; transform: translate(-50%, -50%); }
 .interest-card-community .interest-art::after { width: 9px; height: 9px; background: var(--lime); }
 .interest-card-community h3 { max-width: 16ch; }

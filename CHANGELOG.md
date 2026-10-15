@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-16 — Refresh homepage interest cards
+
+### Changed
+
+- Replaced the blog and badminton cards’ abstract background art with writing and shuttlecock illustrations, and aligned the book and community artwork with the same sage treatment.
+- Updated the community card title to “Helping organise community events”.
+- Removed the interests-section aside and the homepage’s next-chapter section.
+
 ## 2026-10-16 — Keep outline jumps out of browser history
 
 ### Fixed
