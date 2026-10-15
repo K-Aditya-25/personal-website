@@ -5,6 +5,7 @@
 ### Fixed
 
 - Added a Wrangler static-assets configuration for the `personal-website` Worker, targeting Next.js's `out/` export.
+- Added the Wrangler `previews` configuration required for Cloudflare branch preview deployments.
 - Added a pinned Wrangler toolchain and deploy script, and updated deployment instructions for Workers Builds.
 
 ## 2026-10-11 — `nextjs-revamp`
