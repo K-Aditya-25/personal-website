@@ -2,22 +2,22 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
-import { posts } from "../../content/site-data.mjs";
 
 gsap.registerPlugin(useGSAP);
 
-const featuredPosts = posts.slice(0, 3);
-
-export default function FeaturedWriting() {
+export default function FeaturedWriting({ posts = [] }) {
+  const featuredPosts = posts.slice(0, 3);
   const sectionRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const activePost = featuredPosts[activeIndex];
 
   useGSAP(
     () => {
+      if (!activePost) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       gsap.fromTo(".feature-copy", { autoAlpha: 0, x: 24 }, {
         autoAlpha: 1,
@@ -32,12 +32,15 @@ export default function FeaturedWriting() {
         ease: "power3.out",
       });
     },
-    { scope: sectionRef, dependencies: [activeIndex], revertOnUpdate: true },
+    { scope: sectionRef, dependencies: [activeIndex, activePost], revertOnUpdate: true },
   );
 
   function move(step) {
+    if (featuredPosts.length < 2) return;
     setActiveIndex((index) => (index + step + featuredPosts.length) % featuredPosts.length);
   }
+
+  if (!activePost) return null;
 
   return (
     <section className="writing-feature page-width" ref={sectionRef} aria-labelledby="featured-writing-title">
@@ -46,18 +49,18 @@ export default function FeaturedWriting() {
           <p className="eyebrow">Ideas worth exploring</p>
           <h2 id="featured-writing-title">Writing at the edge of what’s next.</h2>
         </div>
-        <a className="text-link" href="https://hashnode.com/@Kharbanda25" target="_blank" rel="noreferrer">
+        <Link className="text-link" href="/writing/">
           All writing <FiArrowUpRight aria-hidden="true" />
-        </a>
+        </Link>
       </div>
 
       <div className="feature-carousel" aria-live="polite">
-        <a className="feature-copy" href={activePost.href} target="_blank" rel="noreferrer">
+        <Link className="feature-copy" href={activePost.href}>
           <span className="feature-count">{String(activeIndex + 1).padStart(2, "0")} / {String(featuredPosts.length).padStart(2, "0")}</span>
           <h3>{activePost.title}</h3>
-          <p>{activePost.note}</p>
-          <span className="feature-read-link">Read on Hashnode <FiArrowUpRight aria-hidden="true" /></span>
-        </a>
+          <p>{activePost.description}</p>
+          <span className="feature-read-link">Read article <FiArrowUpRight aria-hidden="true" /></span>
+        </Link>
         <div className="feature-photo-wrap">
           {activePost.coverImage ? (
             <Image
@@ -83,27 +86,29 @@ export default function FeaturedWriting() {
                 <circle cx="275" cy="55" r="4" fill="#D2F167" />
               </svg>
               <span className="feature-cover-label">{activePost.coverLabel}</span>
-              <span className="feature-cover-note">From convolutions to VGG19</span>
+              <span className="feature-cover-note">Ideas, experiments, and projects</span>
             </div>
           )}
           <span className={`feature-photo-caption${activePost.coverImage ? "" : " feature-photo-caption-dark"}`}>Notes from the learning curve</span>
         </div>
-        <div className="carousel-controls" aria-label="Featured writing controls">
-          <button type="button" onClick={() => move(-1)} aria-label="Previous article"><FiArrowLeft aria-hidden="true" /></button>
-          <div className="carousel-dots">
-            {featuredPosts.map((post, index) => (
-              <button
-                type="button"
-                key={post.href}
-                className={index === activeIndex ? "is-active" : ""}
-                aria-label={`Show article ${index + 1}: ${post.title}`}
-                aria-current={index === activeIndex ? "true" : undefined}
-                onClick={() => setActiveIndex(index)}
-              />
-            ))}
+        {featuredPosts.length > 1 ? (
+          <div className="carousel-controls" aria-label="Featured writing controls">
+            <button type="button" onClick={() => move(-1)} aria-label="Previous article"><FiArrowLeft aria-hidden="true" /></button>
+            <div className="carousel-dots">
+              {featuredPosts.map((post, index) => (
+                <button
+                  type="button"
+                  key={post.slug}
+                  className={index === activeIndex ? "is-active" : ""}
+                  aria-label={`Show article ${index + 1}: ${post.title}`}
+                  aria-current={index === activeIndex ? "true" : undefined}
+                  onClick={() => setActiveIndex(index)}
+                />
+              ))}
+            </div>
+            <button type="button" onClick={() => move(1)} aria-label="Next article"><FiArrowRight aria-hidden="true" /></button>
           </div>
-          <button type="button" onClick={() => move(1)} aria-label="Next article"><FiArrowRight aria-hidden="true" /></button>
-        </div>
+        ) : null}
       </div>
     </section>
   );

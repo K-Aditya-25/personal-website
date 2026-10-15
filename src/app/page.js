@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FiArrowDown, FiArrowUpRight } from "react-icons/fi";
-import { posts, profile, volunteering } from "../../content/site-data.mjs";
+import { getPosts } from "../../content/posts.mjs";
+import { profile, volunteering } from "../../content/site-data.mjs";
 import FeaturedWriting from "../components/featured-writing";
 import ScrubCopy from "../components/scrub-copy";
 
@@ -36,34 +37,36 @@ const interestCards = [
   },
 ];
 
-const accordionItems = [
-  {
-    href: "/writing/",
-    title: "Ideas in public",
-    detail: "Notes on AI, machine learning and what I’m learning along the way.",
-    image: posts[0].coverImage,
-    alt: posts[0].coverAlt,
-    className: "accordion-writing",
-  },
-  {
-    href: "/volunteering/",
-    title: "Events in Dublin",
-    detail: "Meeting people and sharing ideas at Dublin AI Week.",
-    image: "/images/events-dublin.jpeg",
-    alt: "Aditya wearing a Dublin AI Week team shirt at a gathering in Dublin.",
-    className: "accordion-events",
-  },
-  {
-    href: "/volunteering/",
-    title: "Campus days",
-    detail: "Helping new students find their way at Trinity Open Day.",
-    image: volunteering[1].image,
-    alt: volunteering[1].imageAlt,
-    className: "accordion-campus",
-  },
-];
-
 export default function HomePage() {
+  const posts = getPosts();
+  const firstPost = posts[0];
+  const accordionItems = [
+    ...(firstPost ? [{
+      href: firstPost.href,
+      title: "Ideas in public",
+      detail: firstPost.description,
+      image: firstPost.coverImage,
+      alt: firstPost.coverAlt,
+      className: "accordion-writing",
+    }] : []),
+    {
+      href: "/volunteering/",
+      title: "Events in Dublin",
+      detail: "Meeting people and sharing ideas at Dublin AI Week.",
+      image: "/images/events-dublin.jpeg",
+      alt: "Aditya wearing a Dublin AI Week team shirt at a gathering in Dublin.",
+      className: "accordion-events",
+    },
+    {
+      href: "/volunteering/",
+      title: "Campus days",
+      detail: "Helping new students find their way at Trinity Open Day.",
+      image: volunteering[1].image,
+      alt: volunteering[1].imageAlt,
+      className: "accordion-campus",
+    },
+  ];
+
   return (
     <>
       <section className="hero" aria-labelledby="home-title">
@@ -135,7 +138,11 @@ export default function HomePage() {
           <div className="horizontal-accordion">
             {accordionItems.map((item) => (
               <Link className={`accordion-panel ${item.className}`} href={item.href} key={item.title}>
-                <Image className="accordion-image motion-image" src={item.image} alt={item.alt} fill sizes="(max-width: 720px) 100vw, 50vw" unoptimized />
+                {item.image ? (
+                  <Image className="accordion-image motion-image" src={item.image} alt={item.alt} fill sizes="(max-width: 720px) 100vw, 50vw" unoptimized />
+                ) : (
+                  <span className="accordion-image accordion-image-placeholder" aria-hidden="true" />
+                )}
                 <span className="accordion-shade" aria-hidden="true" />
                 <span className="accordion-copy">
                   <span className="accordion-title">{item.title}</span>
@@ -148,7 +155,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <FeaturedWriting />
+      <FeaturedWriting posts={posts} />
 
       <section className="home-last-word page-width section-space">
         <p className="eyebrow">The next chapter</p>

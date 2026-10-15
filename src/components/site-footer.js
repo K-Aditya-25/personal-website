@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { FiMail, FiArrowUpRight } from "react-icons/fi";
 import { FaLinkedinIn } from "react-icons/fa6";
-import { SiGithub, SiHashnode, SiX } from "react-icons/si";
+import { SiGithub, SiX } from "react-icons/si";
 import { profile } from "../../content/site-data.mjs";
 
 const socialIcons = {
   LinkedIn: FaLinkedinIn,
-  Hashnode: SiHashnode,
   X: SiX,
   GitHub: SiGithub,
 };
@@ -41,7 +40,7 @@ export default function SiteFooter() {
           {siteLinks.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
         </nav>
         <div className="footer-socials" aria-label="Find Aditya online">
-          <span className="footer-social-heading">Elsewhere</span>
+          <span className="footer-social-heading">Socials</span>
           <div className="social-icon-row">
             {profile.links.map(({ label, href }) => {
               const Icon = socialIcons[label];

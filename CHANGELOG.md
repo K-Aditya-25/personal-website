@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-10-16 — On-site Markdown blog
+
+### Added
+
+- Added a Markdown post directory with frontmatter metadata, article rendering, reading time, canonical metadata, and statically generated `/writing/<slug>/` pages.
+- Added a Markdown post template and documented the add-file-and-push publishing workflow, including local blog image paths.
+- Imported all 14 Hashnode posts as Markdown with their titles, summaries, SEO metadata, dates, tags, and post content; downloaded and localized 84 cover and article images.
+- Preserved Hashnode SEO titles, SEO descriptions, read times, and the four cover photo credits available through the API.
+- Added long-form article and post-list styling for desktop and mobile layouts.
+- Added rendering support for Hashnode image alignment and callout markup, and mapped links between migrated posts to their local article routes.
+
+### Changed
+
+- Changed the writing list and featured homepage writing links to use local article routes.
+- Removed the old Hashnode-only writing cards, archive link, and footer icon so article discovery and reading stay on the site.
+- Included the current Next.js-generated agent rules block so `next dev` does not recreate it as an uncommitted change.
+
 ## 2026-10-15 — Cloudflare Workers deployment
 
 ### Fixed

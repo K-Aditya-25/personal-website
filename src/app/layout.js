@@ -5,6 +5,7 @@ import SiteFooter from "../components/site-footer";
 import SiteHeader from "../components/site-header";
 
 export const metadata = {
+  metadataBase: new URL("https://adityakharbanda.dev"),
   title: {
     default: "Aditya Kharbanda — Curiosity in motion",
     template: "%s | Aditya Kharbanda",
