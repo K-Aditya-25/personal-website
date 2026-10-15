@@ -27,12 +27,15 @@ The production files are generated in `out/`; the preview serves them at <http:/
 - Photos and filenames are listed in [IMAGES.md](IMAGES.md). Replace them in `public/images/` to update the site.
 - A travel page is a planned addition; it is not in the current navigation until there are places and photos to show.
 
-## Deploy on Cloudflare Pages
+## Deploy on Cloudflare Workers
 
-1. Push this folder to a GitHub repository.
-2. In Cloudflare, open **Workers & Pages**, create a **Pages** project, and connect that repository.
-3. Set the production branch to `main`, the build command to `npm run build`, and the output directory to `out`.
-4. Deploy, then add your purchased domain under the Pages project’s **Custom domains**.
-5. After the first deployment, each push to the production branch triggers a new deployment.
+This site uses Next.js static export and serves the generated `out/` directory as Worker assets. The checked-in [wrangler.jsonc](wrangler.jsonc) names the existing `personal-website` Worker and points Wrangler to that export.
 
-The project uses a Next.js static export, so its routes and visual effects work on static hosting without a running Node.js server.
+For Workers Builds, connect this repository and configure:
+
+- Production branch: `main`
+- Build command: `npm run build`
+- Deploy command: `npm run deploy`
+- Root directory: repository root
+
+Attach `adityakharbanda.dev` to the `personal-website` Worker as a custom domain. Workers Builds uses the Wrangler version pinned in `package.json` and deploys the `out/` assets after the build succeeds.

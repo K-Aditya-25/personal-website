@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
+    "deploy": "wrangler deploy",
     "preview": "node scripts/preview.mjs"
   },
   "dependencies": {
@@ -15,5 +16,8 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-icons": "^5.7.0"
+  },
+  "devDependencies": {
+    "wrangler": "4.151.0"
   }
 }
