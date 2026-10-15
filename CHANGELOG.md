@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 — Keep outline jumps out of browser history
+
+### Fixed
+
+- Updated article outline links to replace the current URL fragment and scroll in place, so browser Back returns to the page before the article instead of stepping through headings.
+
 ## 2026-10-16 — Collapsible article outline
 
 ### Added
