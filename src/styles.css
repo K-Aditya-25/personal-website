@@ -422,6 +422,7 @@ h1, h2, h3 { text-wrap: balance; }
 .blog-cover-credit { width: min(100%, 980px); margin: -56px auto 48px; color: #77847b; font-size: 11px; text-align: right; }
 .blog-cover-credit a { color: #496d36; text-decoration: underline; text-decoration-color: #a2b48c; text-underline-offset: 3px; }
 .blog-markdown { max-width: 760px; margin-inline: auto; color: #26372e; font-size: clamp(16px, 1.45vw, 18px); line-height: 1.86; overflow-wrap: anywhere; }
+.blog-content { min-width: 0; }
 .blog-reading-layout { display: grid; grid-template-columns: minmax(150px, 190px) minmax(0, 760px); align-items: start; justify-content: center; gap: clamp(28px, 5vw, 76px); }
 .blog-reading-layout-no-toc { display: block; }
 .blog-toc { position: sticky; top: 102px; align-self: start; z-index: 2; max-height: calc(100dvh - 124px); }
@@ -459,7 +460,10 @@ h1, h2, h3 { text-wrap: balance; }
 .blog-markdown div[data-node-type="callout-text"] { min-width: 0; }
 .blog-markdown div[data-node-type="callout-text"] > :last-child { margin-bottom: 0; }
 .blog-markdown img { width: auto; max-height: 640px; margin: 35px auto; border-radius: 14px; }
-.blog-markdown iframe { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; margin: 35px auto; border: 0; border-radius: 14px; background: var(--paper-soft); }
+.blog-markdown iframe { display: block; width: 100%; max-width: 100%; margin: 35px auto; border: 0; border-radius: 14px; background: var(--paper-soft); }
+.blog-markdown iframe.blog-embed-video { aspect-ratio: 16 / 9; height: auto; }
+.blog-markdown iframe.blog-embed-interactive { min-height: 420px; }
+.blog-markdown blockquote.twitter-tweet { width: min(100%, 550px); margin: 35px auto; padding: 0; border: 0; }
 .blog-markdown pre { overflow-x: auto; padding: clamp(19px, 3vw, 28px); border-radius: 14px; background: var(--forest); color: #edf2e9; font-size: 13px; line-height: 1.65; }
 .blog-markdown pre code { padding: 0; background: none; color: inherit; font-size: inherit; }
 .blog-markdown :not(pre) > code { padding: 2px 6px; border-radius: 4px; background: #e6ebe2; color: var(--forest); font-size: .88em; }

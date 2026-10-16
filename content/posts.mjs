@@ -33,6 +33,7 @@ const markdownHtmlOptions = {
     ...sanitizeHtml.defaults.allowedAttributes,
     a: [...(sanitizeHtml.defaults.allowedAttributes.a ?? []), "name", "target", "rel"],
     div: ["data-node-type"],
+    blockquote: ["class", "data-dnt", "data-theme"],
     h2: ["id"],
     h3: ["id"],
     h4: ["id"],
@@ -42,7 +43,7 @@ const markdownHtmlOptions = {
     code: ["class"],
     th: ["align"],
     td: ["align"],
-    iframe: ["src", "title", "width", "height", "allow", "allowfullscreen", "loading", "referrerpolicy"],
+    iframe: ["src", "title", "width", "height", "allow", "allowfullscreen", "loading", "referrerpolicy", "class"],
   },
   allowedSchemes: ["http", "https", "mailto"],
   allowedIframeHostnames: [
@@ -50,7 +51,10 @@ const markdownHtmlOptions = {
     "www.youtube.com",
     "www.youtube-nocookie.com",
     "player.vimeo.com",
+    "open.spotify.com",
+    "codepen.io",
     "codesandbox.io",
+    "www.codesandbox.io",
     "stackblitz.com",
   ],
   allowIframeRelativeUrls: false,
@@ -113,7 +117,122 @@ function renderPostMarkdown(content) {
     return html.replace(`<h${outputDepth}>`, `<h${outputDepth} id="${id}">`);
   };
 
-  return { html: marked.parse(content, { renderer }), headings };
+  const contentWithEmbeds = content.replace(/^%\[([^\]\r\n]+)\][ \t]*$/gm, (_match, rawUrl) => {
+    const url = safeHttpUrl(rawUrl);
+    return `\n\n${url ? renderExternalEmbed(url) : escapeHtml(rawUrl)}\n\n`;
+  });
+
+  return { html: marked.parse(contentWithEmbeds, { renderer }), headings };
+}
+
+function escapeHtml(value) {
+  return value.replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[character]);
+}
+
+function iframeHtml(src, title, className, height = 315, allow = "") {
+  const escapedAllow = allow ? ` allow="${escapeHtml(allow)}"` : "";
+  return `<iframe class="${escapeHtml(className)}" src="${escapeHtml(src)}" title="${escapeHtml(title)}" width="100%" height="${height}"${escapedAllow} allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+}
+
+function parseVideoStart(value) {
+  if (!value) return 0;
+  if (/^\d+$/.test(value)) return Number(value);
+
+  const match = value.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/);
+  if (!match || !match[0]) return 0;
+  return Number(match[1] ?? 0) * 3600 + Number(match[2] ?? 0) * 60 + Number(match[3] ?? 0);
+}
+
+function youtubeVideo(url) {
+  const host = url.hostname.toLowerCase();
+  let videoId = null;
+
+  if (host === "youtu.be") {
+    videoId = url.pathname.split("/").filter(Boolean)[0] ?? null;
+  } else if (["youtube.com", "www.youtube.com", "m.youtube.com", "youtube-nocookie.com", "www.youtube-nocookie.com"].includes(host)) {
+    videoId = url.searchParams.get("v");
+    if (!videoId) videoId = url.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/)?.[1] ?? null;
+  }
+
+  if (!videoId || !/^[A-Za-z0-9_-]{11}$/.test(videoId)) return null;
+
+  const playerUrl = new URL(`https://www.youtube-nocookie.com/embed/${videoId}`);
+  const start = url.searchParams.get("start") ?? url.searchParams.get("t");
+  const startSeconds = parseVideoStart(start);
+  if (startSeconds) playerUrl.searchParams.set("start", String(startSeconds));
+  playerUrl.searchParams.set("rel", "0");
+
+  return iframeHtml(
+    playerUrl.href,
+    "YouTube video player",
+    "blog-embed-video",
+    315,
+    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+  );
+}
+
+function xPost(url) {
+  const host = url.hostname.toLowerCase();
+  if (!["x.com", "www.x.com", "twitter.com", "www.twitter.com", "mobile.twitter.com"].includes(host)) return null;
+  if (!/(?:^|\/)status\/\d+(?:\/|$)/.test(url.pathname)) return null;
+
+  return `<blockquote class="twitter-tweet" data-dnt="true" data-theme="light"><a href="${escapeHtml(url.href)}">View this post on X</a></blockquote>`;
+}
+
+function renderExternalEmbed(href) {
+  const url = new URL(href);
+  const video = youtubeVideo(url);
+  if (video) return video;
+
+  const tweet = xPost(url);
+  if (tweet) return tweet;
+
+  const host = url.hostname.toLowerCase();
+  const vimeoId = host === "player.vimeo.com"
+    ? url.pathname.match(/^\/video\/(\d+)\/?$/)?.[1]
+    : ["vimeo.com", "www.vimeo.com"].includes(host) ? url.pathname.match(/^\/(\d+)\/?$/)?.[1] : null;
+  if (vimeoId) {
+    return iframeHtml(`https://player.vimeo.com/video/${vimeoId}`, "Vimeo video player", "blog-embed-video");
+  }
+
+  const spotifyMatch = host === "open.spotify.com" && url.pathname.match(/^\/(track|album|playlist|episode|show)\/([A-Za-z0-9]+)\/?$/);
+  if (spotifyMatch) {
+    const [, kind, id] = spotifyMatch;
+    return iframeHtml(
+      `https://open.spotify.com/embed/${kind}/${id}`,
+      `Spotify ${kind}`,
+      "blog-embed-audio",
+      kind === "track" ? 152 : 352,
+      "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture",
+    );
+  }
+
+  if (["codesandbox.io", "www.codesandbox.io"].includes(host) && /^\/(?:s|p\/sandbox)\//.test(url.pathname)) {
+    url.searchParams.set("embed", "1");
+    return iframeHtml(url.href, "CodeSandbox interactive example", "blog-embed-interactive", 620, "clipboard-write; encrypted-media");
+  }
+
+  if (host === "stackblitz.com" && /^\/(?:edit|github)\//.test(url.pathname)) {
+    url.searchParams.set("embed", "1");
+    return iframeHtml(url.href, "StackBlitz interactive example", "blog-embed-interactive", 620, "clipboard-write; encrypted-media");
+  }
+
+  if (host === "codepen.io") {
+    const match = url.pathname.match(/^\/([^/]+)\/(?:pen|full)\/([A-Za-z0-9]+)\/?$/);
+    if (match) {
+      const [, author, penId] = match;
+      return iframeHtml(`https://codepen.io/${author}/embed/${penId}?default-tab=result`, "CodePen example", "blog-embed-interactive", 520);
+    }
+  }
+
+  const escapedHref = escapeHtml(url.href);
+  return `<p><a href="${escapedHref}" target="_blank" rel="noopener noreferrer">${escapedHref}</a></p>`;
 }
 
 function safeHttpUrl(value) {

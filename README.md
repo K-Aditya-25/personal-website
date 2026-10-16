@@ -26,6 +26,7 @@ The production files are generated in `out/`; the preview serves them at <http:/
 - All 14 Hashnode posts are now in `content/posts/` as Markdown files, with their cover and inline images stored locally under `public/images/blog/`. New posts go in the same directory: copy `_TEMPLATE.md`, name the file with a lowercase hyphenated slug, and fill in its frontmatter and body. The filename becomes the article URL under `/writing/`.
 - Each post needs `title`, `description`, and `date` (`YYYY-MM-DD`). Optional `tags`, `coverImage`, `coverAlt`, `seoTitle`, `seoDescription`, `readTimeInMinutes`, and cover credit fields control its listing and search previews.
 - Put local images in `public/images/blog/` and reference them with a site path such as `![A short description](/images/blog/example.jpg)`. Markdown is rendered into the static export, and unsafe HTML is removed.
+- Embed supported external media by putting `%[URL]` on its own line. YouTube, X/Twitter, Vimeo, Spotify, CodePen, CodeSandbox, and StackBlitz links render as embeds; other URLs remain clickable links.
 - Add the Markdown file and any local images to the main repo, then push to the production branch; the existing Workers Build runs `npm run build` and deploys the generated article page with the rest of the site.
 - Next.js routes and shared layout live in `src/app/`; interactive site components live in `src/components/`.
 - Photos and filenames are listed in [IMAGES.md](IMAGES.md). Replace them in `public/images/` to update the site.

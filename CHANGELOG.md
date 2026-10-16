@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-16 — Render external blog embeds
+
+### Added
+
+- Added responsive embeds for YouTube, X/Twitter, Vimeo, Spotify, CodePen, CodeSandbox, and StackBlitz Markdown directives, with safe link fallbacks for unsupported URLs.
+- Added client-side X widget loading, focused Node tests, and the `npm test` command.
+- Added a repository rule to run the build and relevant tests after code changes.
+
 ## 2026-10-16 — Future plans
 
 ### Added
