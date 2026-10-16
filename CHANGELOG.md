@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-16 — Future plans
+
+### Added
+
+- Added a Markdown document listing planned website improvements and content updates.
+
 ## 2026-10-16 — Refresh homepage interest cards
 
 ### Changed
