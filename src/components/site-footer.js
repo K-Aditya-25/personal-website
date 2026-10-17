@@ -12,7 +12,7 @@ const socialIcons = {
 
 const siteLinks = [
   ["Writing", "/writing/"],
-  ["Library", "/books/"],
+  ["Library", "/library/"],
   ["Competitions", "/competitions/"],
   ["Volunteering", "/volunteering/"],
   ["Courses", "/courses/"],

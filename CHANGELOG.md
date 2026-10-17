@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-17 — Move Library to `/library/`
+
+### Changed
+
+- Moved the Library page from `/books/` to `/library/`, updated site links and canonical metadata, and added a permanent redirect from the old URL.
+
 ## 2026-10-17 — Open contact links in Gmail
 
 ### Changed

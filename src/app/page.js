@@ -25,7 +25,7 @@ const interestCards = [
     copy: "Men’s doubles in the Dublin District League, moving from Division 5 to Division 4 in 2 years.",
   },
   {
-    href: "/books/",
+    href: "/library/",
     className: "interest-card interest-card-books",
     eyebrow: "On the bookshelf",
     title: "Always in the middle of a book.",
