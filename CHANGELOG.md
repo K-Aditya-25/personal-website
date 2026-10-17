@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-17 — Open contact links in Gmail
+
+### Changed
+
+- Updated the homepage and footer contact links to open a Gmail compose draft with Aditya’s email address prefilled in the To field.
+
 ## 2026-10-17 — Add AK branding to shared links
 
 ### Added

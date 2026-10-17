@@ -4,7 +4,7 @@ import { FiArrowDown, FiArrowUpRight } from "react-icons/fi";
 import { GiShuttlecock } from "react-icons/gi";
 import { TbWriting } from "react-icons/tb";
 import { getPosts } from "../../content/posts.mjs";
-import { profile, volunteering } from "../../content/site-data.mjs";
+import { emailComposeHref, volunteering } from "../../content/site-data.mjs";
 import FeaturedWriting from "../components/featured-writing";
 
 const interestCards = [
@@ -90,7 +90,7 @@ export default function HomePage() {
           </p>
           <div className="hero-actions">
             <Link className="button button-lime" href="/writing/">Explore my writing <FiArrowUpRight aria-hidden="true" /></Link>
-            <a className="button button-ghost" href={`mailto:${profile.email}`}>Say hello <FiArrowUpRight aria-hidden="true" /></a>
+            <a className="button button-ghost" href={emailComposeHref} target="_blank" rel="noreferrer">Say hello <FiArrowUpRight aria-hidden="true" /></a>
           </div>
         </div>
         <a className="hero-scroll" href="#interests"><span>Scroll to explore</span><FiArrowDown aria-hidden="true" /></a>

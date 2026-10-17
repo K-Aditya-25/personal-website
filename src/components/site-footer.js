@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FiMail, FiArrowUpRight } from "react-icons/fi";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { SiGithub, SiX } from "react-icons/si";
-import { profile } from "../../content/site-data.mjs";
+import { emailComposeHref, profile } from "../../content/site-data.mjs";
 
 const socialIcons = {
   LinkedIn: FaLinkedinIn,
@@ -26,7 +26,7 @@ export default function SiteFooter() {
           <p className="eyebrow eyebrow-light">Keep in touch</p>
           <h2>Good things start with a conversation.</h2>
         </div>
-        <a className="button button-lime" href={`mailto:${profile.email}`}>
+        <a className="button button-lime" href={emailComposeHref} target="_blank" rel="noreferrer">
           Say hello <FiArrowUpRight aria-hidden="true" />
         </a>
       </div>
@@ -50,7 +50,7 @@ export default function SiteFooter() {
                 </a>
               );
             })}
-            <a className="social-icon-link" href={`mailto:${profile.email}`} aria-label="Email">
+            <a className="social-icon-link" href={emailComposeHref} target="_blank" rel="noreferrer" aria-label="Email">
               <FiMail aria-hidden="true" focusable="false" />
             </a>
           </div>

@@ -12,6 +12,8 @@ export const profile = {
   ],
 };
 
+export const emailComposeHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profile.email)}`;
+
 export const books = {
   reading: [
     { title: "Thinking, Fast and Slow", author: "Daniel Kahneman" },
