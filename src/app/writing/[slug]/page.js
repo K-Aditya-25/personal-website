@@ -26,10 +26,17 @@ export async function generateMetadata({ params }) {
     alternates: { canonical: post.href },
     openGraph: {
       type: "article",
+      url: post.href,
       title: post.seoTitle || post.title,
       description: post.seoDescription || post.description,
       publishedTime: `${post.date}T00:00:00.000Z`,
-      ...(post.coverImage ? { images: [post.coverImage] } : {}),
+      images: ["/social-preview.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.seoTitle || post.title,
+      description: post.seoDescription || post.description,
+      images: ["/social-preview.png"],
     },
   };
 }

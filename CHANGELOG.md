@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-17 — Add AK branding to shared links
+
+### Added
+
+- Added a simple AK SVG site icon and matching 1200×630 social preview for Open Graph and X cards, including article pages.
+
 ## 2026-10-17 — Rename Books to Library and add Up Next shelf
 
 ### Changed

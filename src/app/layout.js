@@ -12,11 +12,30 @@ export const metadata = {
   },
   description:
     "The personal site of Aditya Kharbanda: technology, writing, badminton, books and community in Dublin.",
+  icons: {
+    icon: "/icon.svg",
+  },
   openGraph: {
     type: "website",
+    siteName: "Aditya Kharbanda",
     title: "Aditya Kharbanda — Curiosity in motion",
     description:
       "Technology, writing, badminton, books and community in Dublin.",
+    images: [
+      {
+        url: "/social-preview.png",
+        width: 1200,
+        height: 630,
+        alt: "AK",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aditya Kharbanda — Curiosity in motion",
+    description:
+      "Technology, writing, badminton, books and community in Dublin.",
+    images: ["/social-preview.png"],
   },
 };
 
