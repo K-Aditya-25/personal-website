@@ -2,15 +2,15 @@ import { books } from "../../../content/site-data.mjs";
 import PageIntro from "../../components/page-intro";
 
 export const metadata = {
-  title: "Books",
-  description: "Books Aditya Kharbanda has finished and the two he is reading now.",
+  title: "Library",
+  description: "Books Aditya Kharbanda is reading, plans to read next, and has finished.",
 };
 
-function BookGroup({ title, description, entries, group }) {
+function BookGroup({ title, eyebrow, description, entries, group }) {
   return (
     <section className={`book-group book-group-${group}`}>
       <div className="book-group-heading">
-        <div><p className="eyebrow">{group === "reading" ? "Currently open" : "On the shelf"}</p><h2>{title}</h2></div>
+        <div><p className="eyebrow">{eyebrow}</p><h2>{title}</h2></div>
         <p>{description}</p>
       </div>
       <ol className="book-list">
@@ -29,10 +29,11 @@ function BookGroup({ title, description, entries, group }) {
 export default function BooksPage() {
   return (
     <>
-      <PageIntro title="A shelf that keeps growing." description="Stories, psychology and practical ideas. Here’s what’s finished and what’s open." />
+      <PageIntro title="Library" description="What I’m reading now, what’s up next, and the books I’ve finished." />
       <section className="content-section page-width bookshelf-page">
-        <BookGroup title="Read" description="Five books on the shelf." entries={books.read} group="read" />
-      <BookGroup title="Reading now" description="Two books in progress." entries={books.reading} group="reading" />
+        <BookGroup title="Reading" eyebrow="Currently open" description="Two books in progress." entries={books.reading} group="reading" />
+        <BookGroup title="Up Next" eyebrow="Coming up" description="Two on deck." entries={books.upNext} group="up-next" />
+        <BookGroup title="Read" eyebrow="On the shelf" description="Five finished." entries={books.read} group="read" />
       </section>
     </>
   );

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-17 — Rename Books to Library and add Up Next shelf
+
+### Changed
+
+- Renamed the Books page and navigation links to Library, and arranged the shelves as Reading, Up Next, and Read.
+- Added The Art of Thinking Clearly by Rolf Dobelli and An Illustrated Guide to AI Agents by Maarten Grootendorst and Jay Alammar to Up Next.
+- Updated the bookshelf layout for three columns on desktop and a stacked layout on mobile.
+
 ## 2026-10-16 — Render external blog embeds
 
 ### Added

@@ -13,16 +13,20 @@ export const profile = {
 };
 
 export const books = {
+  reading: [
+    { title: "Thinking, Fast and Slow", author: "Daniel Kahneman" },
+    { title: "The Secret of Secrets", author: "Dan Brown" },
+  ],
+  upNext: [
+    { title: "The Art of Thinking Clearly", author: "Rolf Dobelli" },
+    { title: "An Illustrated Guide to AI Agents", author: "Maarten Grootendorst and Jay Alammar" },
+  ],
   read: [
     { title: "Angels & Demons", author: "Dan Brown" },
     { title: "The Da Vinci Code", author: "Dan Brown" },
     { title: "The Lost Symbol", author: "Dan Brown" },
     { title: "The 7 Habits of Highly Effective People", author: "Stephen R. Covey" },
     { title: "The Psychology of Money", author: "Morgan Housel" },
-  ],
-  reading: [
-    { title: "Thinking, Fast and Slow", author: "Daniel Kahneman" },
-    { title: "The Secret of Secrets", author: "Dan Brown" },
   ],
 };
 

@@ -11,7 +11,7 @@ gsap.registerPlugin(useGSAP);
 const navItems = [
   ["Home", "/"],
   ["Writing", "/writing/"],
-  ["Books", "/books/"],
+  ["Library", "/books/"],
   ["Competitions", "/competitions/"],
   ["Volunteering", "/volunteering/"],
   ["Courses", "/courses/"],
